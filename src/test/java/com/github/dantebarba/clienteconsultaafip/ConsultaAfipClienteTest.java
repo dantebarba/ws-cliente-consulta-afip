@@ -12,6 +12,7 @@ import com.github.dantebarba.clienteconsultaafip.exceptions.ConexionException;
 import com.github.dantebarba.clienteconsultaafip.exceptions.InstanciaInexistenteException;
 import com.github.dantebarba.clienteconsultaafip.model.TipoPersona;
 import com.github.dantebarba.clienteconsultaafip.model.responses.ConsultaPersonaAfipResponse;
+import com.github.dantebarba.clienteconsultaafip.model.responses.ConsultaProvinciasResponse;
 import com.github.dantebarba.clienteconsultaafip.model.responses.PingResponse;
 
 public class ConsultaAfipClienteTest {
@@ -75,6 +76,17 @@ public class ConsultaAfipClienteTest {
 		TipoPersona tipoPersona = null;
 		tipoPersona = ConsultaAfipClienteFactory.getInstance()
 				.consultarTipoPersona("2323");
+	}
+	
+	@Test 
+	public void testGetProvincias() {
+		ConsultaProvinciasResponse response = null;
+		try {
+			response = ConsultaAfipClienteFactory.getInstance().provincias();
+		} catch (ServicioAfipException e) {
+			fail();
+		}
+		System.out.print(response.getData().get(0).getDescProvincia());
 	}
 
 	@After

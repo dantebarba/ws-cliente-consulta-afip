@@ -14,10 +14,12 @@ import org.glassfish.jersey.filter.LoggingFilter;
 import com.github.dantebarba.clienteconsultaafip.endpoints.ConsultaPersonaAfip;
 import com.github.dantebarba.clienteconsultaafip.endpoints.HasEndpoint;
 import com.github.dantebarba.clienteconsultaafip.endpoints.Ping;
+import com.github.dantebarba.clienteconsultaafip.endpoints.Provincias;
 import com.github.dantebarba.clienteconsultaafip.exceptions.ConexionException;
 import com.github.dantebarba.clienteconsultaafip.model.HasError;
 import com.github.dantebarba.clienteconsultaafip.model.TipoPersona;
 import com.github.dantebarba.clienteconsultaafip.model.responses.ConsultaPersonaAfipResponse;
+import com.github.dantebarba.clienteconsultaafip.model.responses.ConsultaProvinciasResponse;
 import com.github.dantebarba.clienteconsultaafip.model.responses.PingResponse;
 
 public class ConsultaAfipCliente implements HasEndpoint {
@@ -106,6 +108,12 @@ public class ConsultaAfipCliente implements HasEndpoint {
 		ConsultaPersonaAfipResponse response = this.consultarPorCuit(cuit);
 		this.checkErrors(response);
 		return response.getData().getTipoPersona();
+	}
+	
+	public ConsultaProvinciasResponse provincias() throws ServicioAfipException {
+		ConsultaProvinciasResponse response = processResponse(this.getConnection().path(new Provincias().getEndpoint()).request().get(), ConsultaProvinciasResponse.class);
+		this.checkErrors(response);
+		return response;
 	}
 
 	private void checkErrors(HasError response) throws ServicioAfipException {
